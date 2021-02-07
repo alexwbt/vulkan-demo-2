@@ -1,0 +1,10 @@
+# ide
+.vs/
+
+# user
+*.user
+UserMacros.props
+
+# build
+bin/
+int/
