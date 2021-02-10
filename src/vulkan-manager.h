@@ -7,18 +7,19 @@ namespace vk
     private:
         VkInstance instance_;
         VkPhysicalDevice physical_device_;
+        VkSurfaceKHR surface_;
         VkDevice device_;
 
         std::vector<VkQueueFamilyProperties> queue_families_;
-        std::vector<float> queue_priorities_ = { 1.0f };
 
     public:
-        VulkanManager();
+        VulkanManager(GLFWwindow* window);
         ~VulkanManager();
 
     private:
         void CreateInstance();
         void GetPhysicalDeviceAndQueuesFamilies();
+        void CreateSurface(GLFWwindow* window);
         void CreateDevice();
     };
 }

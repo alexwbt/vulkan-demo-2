@@ -2,16 +2,18 @@
 
 namespace vk
 {
-    VulkanManager::VulkanManager()
+    VulkanManager::VulkanManager(GLFWwindow* window)
     {
         CreateInstance();
         GetPhysicalDeviceAndQueuesFamilies();
+        CreateSurface(window);
         CreateDevice();
     }
 
     VulkanManager::~VulkanManager()
     {
         vkDestroyDevice(device_, nullptr);
+        vkDestroySurfaceKHR(instance_, surface_, nullptr);
         vkDestroyInstance(instance_, nullptr);
     }
 
@@ -48,7 +50,7 @@ namespace vk
     {
         uint32_t device_count = 0;
         vkEnumeratePhysicalDevices(instance_, &device_count, nullptr);
-        
+
         std::cout << "Graphics Card Count: " << device_count << std::endl;
 
         if (device_count == 0)
@@ -73,28 +75,58 @@ namespace vk
     void VulkanManager::CreateDevice()
     {
         // get graphics queue family index
-        int i;
-        for (i = 0; i < queue_families_.size(); i++)
+        uint32_t graphics_queue_family_index = -1;
+        for (int i = 0; i < queue_families_.size(); i++)
+        {
             if (queue_families_[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
+            {
+                graphics_queue_family_index = i;
                 break;
+            }
+        }
 
-        VkDeviceQueueCreateInfo queue_create_info{};
-        queue_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-        queue_create_info.queueFamilyIndex = i;
-        queue_create_info.queueCount = 1;
-        queue_create_info.pQueuePriorities = queue_priorities_.data();
+        // get present queue family index
+        uint32_t present_queue_family_index = -1;
+        for (int i = 0; i < queue_families_.size(); i++)
+        {
+            VkBool32 present_support = false;
+            vkGetPhysicalDeviceSurfaceSupportKHR(physical_device_, i, surface_, &present_support);
 
-        VkPhysicalDeviceFeatures device_features{};
+            if (present_support)
+            {
+                present_queue_family_index = i;
+                break;
+            }
+        }
+
+        // create device queue create infos
+        std::vector<uint32_t> queue_family_indices = { graphics_queue_family_index, present_queue_family_index };
+        std::vector<VkDeviceQueueCreateInfo> queue_create_infos;
+        float queue_priority = 1.0f;
+        for (auto index : queue_family_indices)
+        {
+            VkDeviceQueueCreateInfo queue_create_info{};
+            queue_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+            queue_create_info.queueFamilyIndex = index;
+            queue_create_info.queueCount = 1;
+            queue_create_info.pQueuePriorities = &queue_priority;
+            queue_create_infos.push_back(queue_create_info);
+        }
 
         // create logical device
         VkDeviceCreateInfo create_info{};
         create_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-        create_info.pQueueCreateInfos = &queue_create_info;
-        create_info.queueCreateInfoCount = 1;
-        create_info.pEnabledFeatures = &device_features;
+        create_info.pQueueCreateInfos = queue_create_infos.data();
+        create_info.queueCreateInfoCount = static_cast<uint32_t>(queue_create_infos.size());
         create_info.enabledLayerCount = 0;
 
         if (vkCreateDevice(physical_device_, &create_info, nullptr, &device_) != VK_SUCCESS)
             throw std::runtime_error("Failed to create logical device.");
+    }
+
+    void VulkanManager::CreateSurface(GLFWwindow* window)
+    {
+        if (glfwCreateWindowSurface(instance_, window, nullptr, &surface_) != VK_SUCCESS)
+            throw std::runtime_error("Failed to create window surface.");
     }
 }

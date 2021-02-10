@@ -9,12 +9,11 @@ int main()
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
         GLFWwindow* window = glfwCreateWindow(800, 600, "Vulkan window", nullptr, nullptr);
 
-        vk::VulkanManager vk_manager;
+        vk::VulkanManager vk_manager(window);
 
         while (!glfwWindowShouldClose(window))
         {
             glfwPollEvents();
-
 
         }
 
