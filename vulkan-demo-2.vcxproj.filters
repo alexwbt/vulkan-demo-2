@@ -8,6 +8,9 @@
     <Filter Include="Source Files\Renderer">
       <UniqueIdentifier>{4933eca5-8f59-4fd7-9ed2-4985d691ea00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader Files">
+      <UniqueIdentifier>{6b030bc4-5b22-4afa-ae7c-7577d53c8c5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -30,5 +33,19 @@
     <ClInclude Include="src\pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\file.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\compile.bat">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="src\shaders\fragment.shader">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="src\shaders\vertex.shader">
+      <Filter>Shader Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

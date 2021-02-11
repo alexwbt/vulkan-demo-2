@@ -4,12 +4,15 @@ int main()
 {
     try
     {
+        constexpr uint32_t width = 800, height = 600;
+
         // init window
         glfwInit();
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-        GLFWwindow* window = glfwCreateWindow(800, 600, "Vulkan window", nullptr, nullptr);
+        GLFWwindow* window = glfwCreateWindow(width, height, "Vulkan window", nullptr, nullptr);
 
-        vk::VulkanManager vk_manager(window);
+        vk::VulkanManager vk_manager(window, width, height);
+        vk::Renderer renderer(vk_manager);
 
         while (!glfwWindowShouldClose(window))
         {

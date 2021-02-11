@@ -1,7 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 #include <vector>
+#include <set>
 
 // GLFW
 #define GLFW_INCLUDE_VULKAN
@@ -13,5 +15,7 @@
 //#include <glm/vec4.hpp>
 //#include <glm/mat4x4.hpp>
 
-#include "renderer.h"
+#include "file.h"
+
 #include "vulkan-manager.h"
+#include "renderer.h"

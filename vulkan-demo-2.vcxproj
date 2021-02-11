@@ -97,9 +97,15 @@
     <ClCompile Include="src\vulkan-manager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\file.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\vulkan-manager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\compile.bat" />
+    <None Include="src\shaders\fragment.shader" />
+    <None Include="src\shaders\vertex.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
