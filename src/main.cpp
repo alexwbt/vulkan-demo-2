@@ -11,7 +11,7 @@ int main()
         GLFWwindow* window = glfwCreateWindow(width, height, "Vulkan window", nullptr, nullptr);
 
         vk::VulkanManager vk_manager(window, width, height);
-        vk::Renderer renderer;
+        //vk::Renderer renderer;
 
         while (!glfwWindowShouldClose(window))
         {

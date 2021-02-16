@@ -220,14 +220,14 @@ namespace vk
             throw std::runtime_error("Failed to create swapchain.");
 
         // get swapchain images
-        uint32_t image_count = 0;
+        image_count = 0;
         vkGetSwapchainImagesKHR(device_, swapchain_, &image_count, nullptr);
         swapchain_images_.resize(image_count);
         vkGetSwapchainImagesKHR(device_, swapchain_, &image_count, swapchain_images_.data());
 
         // create image views for swapchain images
         swapchain_image_views_.resize(image_count);
-        for (int i = 0; i < image_count; i++)
+        for (uint32_t i = 0; i < image_count; i++)
         {
             VkImageViewCreateInfo create_info{};
             create_info.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -298,8 +298,8 @@ namespace vk
 
     void VulkanManager::CreateGraphicsPipeline()
     {
-        VkShaderModule vertex_shader = CreateShaderModule("shaders/vert.spv");
-        VkShaderModule fragment_shader = CreateShaderModule("shaders/frag.spv");
+        VkShaderModule vertex_shader = CreateShaderModule("src/shaders/vert.spv");
+        VkShaderModule fragment_shader = CreateShaderModule("src/shaders/frag.spv");
 
         VkPipelineShaderStageCreateInfo vertex_shader_stage_info{};
         vertex_shader_stage_info.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
