@@ -61,8 +61,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;$(GLFW)\include;$(GLM);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -79,8 +80,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;$(GLFW)\include;$(GLM);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -93,19 +95,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\renderer.cpp" />
-    <ClCompile Include="src\vulkan-manager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\file.h" />
-    <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\renderer.h" />
-    <ClInclude Include="src\vulkan-manager.h" />
+    <ClCompile Include="src\vulkan\vulkan-device.ixx" />
+    <ClCompile Include="src\vulkan\vulkan-instance.ixx" />
+    <ClCompile Include="src\vulkan\vulkan-manager.ixx" />
+    <ClCompile Include="src\vulkan\vulkan.ixx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\compile.bat" />
     <None Include="src\shaders\fragment.shader" />
     <None Include="src\shaders\vertex.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\vulkan\vulkan.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

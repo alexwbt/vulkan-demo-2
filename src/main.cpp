@@ -1,28 +1,23 @@
-#include "pch.h"
+#include <GLFW/glfw3.h>
+
+import Vulkan;
 
 int main()
 {
-    try
+    glfwInit();
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    GLFWwindow* window = glfwCreateWindow(800, 600, "Vulkan window", nullptr, nullptr);
+
+    vk::VulkanManager vk_manager{};
+    vk_manager.Init(window);
+
+    while (!glfwWindowShouldClose(window))
     {
-        constexpr uint32_t width = 800, height = 600;
-
-        glfwInit();
-        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-        GLFWwindow* window = glfwCreateWindow(width, height, "Vulkan window", nullptr, nullptr);
-
-        vk::VulkanManager vk_manager(window, width, height);
-        //vk::Renderer renderer;
-
-        while (!glfwWindowShouldClose(window))
-        {
-            glfwPollEvents();
-        }
-
-        glfwDestroyWindow(window);
-        glfwTerminate();
+        glfwPollEvents();
     }
-    catch (const std::exception& e)
-    {
-        std::cout << e.what() << std::endl;
-    }
+
+    vk_manager.Terminate();
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
 }

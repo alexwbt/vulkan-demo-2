@@ -5,37 +5,29 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source Files\Renderer">
-      <UniqueIdentifier>{4933eca5-8f59-4fd7-9ed2-4985d691ea00}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader Files">
       <UniqueIdentifier>{6b030bc4-5b22-4afa-ae7c-7577d53c8c5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Vulkan">
+      <UniqueIdentifier>{4933eca5-8f59-4fd7-9ed2-4985d691ea00}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer.cpp">
-      <Filter>Source Files\Renderer</Filter>
+    <ClCompile Include="src\vulkan\vulkan-manager.ixx">
+      <Filter>Source Files\Vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\vulkan-manager.cpp">
-      <Filter>Source Files\Renderer</Filter>
+    <ClCompile Include="src\vulkan\vulkan.ixx">
+      <Filter>Source Files\Vulkan</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\renderer.h">
-      <Filter>Source Files\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\vulkan-manager.h">
-      <Filter>Source Files\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\pch.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\file.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
+    <ClCompile Include="src\vulkan\vulkan-instance.ixx">
+      <Filter>Source Files\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\vulkan-device.ixx">
+      <Filter>Source Files\Vulkan</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\compile.bat">
@@ -47,5 +39,10 @@
     <None Include="src\shaders\vertex.shader">
       <Filter>Shader Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\vulkan\vulkan.h">
+      <Filter>Source Files\Vulkan</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
