@@ -98,6 +98,7 @@
     <ClCompile Include="src\vulkan\vulkan-device.ixx" />
     <ClCompile Include="src\vulkan\vulkan-instance.ixx" />
     <ClCompile Include="src\vulkan\vulkan-manager.ixx" />
+    <ClCompile Include="src\vulkan\vulkan-swapchain.ixx" />
     <ClCompile Include="src\vulkan\vulkan.ixx" />
   </ItemGroup>
   <ItemGroup>

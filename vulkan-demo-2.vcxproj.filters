@@ -28,6 +28,9 @@
     <ClCompile Include="src\vulkan\vulkan-device.ixx">
       <Filter>Source Files\Vulkan</Filter>
     </ClCompile>
+    <ClCompile Include="src\vulkan\vulkan-swapchain.ixx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\compile.bat">

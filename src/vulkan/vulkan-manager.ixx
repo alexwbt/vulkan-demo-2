@@ -3,6 +3,7 @@ module;
 
 export module Vulkan:Manager;
 import :Instance;
+import :Swapchain;
 import :Device;
 
 namespace vk
@@ -11,6 +12,7 @@ namespace vk
     {
     private:
         Instance instance_;
+        Swapchain swapchain_;
         Device device_;
 
     public:
@@ -18,20 +20,28 @@ namespace vk
         {
             try
             {
-                instance_.Create();
-                device_.Create(instance_.Get(), { VK_QUEUE_GRAPHICS_BIT });
+                instance_.Create(
+                    {
+#ifdef _DEBUG
+                        "VK_LAYER_KHRONOS_validation"
+#endif
+                    }
+                );
+                swapchain_.Create(instance_.Get(), window);
+                device_.Create(instance_.Get(), swapchain_.GetSurface());
             }
             catch (const std::runtime_error& error)
             {
-                std::cout << error.what() << std::endl;
+                std::cout << "Error: " << error.what() << std::endl;
                 return false;
             }
             return true;
         }
 
-        void Terminate()
+        void Clean()
         {
             device_.Destroy();
+            swapchain_.Destroy(instance_.Get());
             instance_.Destroy();
         }
     };
