@@ -35,6 +35,8 @@ namespace vk
         VkQueue graphics_queue_;
         VkQueue presentation_queue_;
 
+        SwapchainDetail swapchain_detail_;
+
     private:
         auto GetQueueFamilyIndices(VkPhysicalDevice device, VkSurfaceKHR surface)
         {
@@ -90,29 +92,29 @@ namespace vk
         }
 
 
-        auto GetSurfaceProperties(VkPhysicalDevice device, VkSurfaceKHR surface)
+        auto GetSwapchainDetail(VkPhysicalDevice device, VkSurfaceKHR surface)
         {
-            SurfaceProperties properties{};
+            SwapchainDetail detail{};
 
-            vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &properties.capabilities);
+            vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &detail.surface_capabilities);
 
             uint32_t format_count = 0;
             vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &format_count, nullptr);
             if (format_count > 0)
             {
-                properties.formats.resize(format_count);
-                vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &format_count, properties.formats.data());
+                detail.surface_formats.resize(format_count);
+                vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &format_count, detail.surface_formats.data());
             }
 
             uint32_t present_mode_count = 0;
             vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &present_mode_count, nullptr);
             if (present_mode_count > 0)
             {
-                properties.present_modes.resize(present_mode_count);
-                vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &present_mode_count, properties.present_modes.data());
+                detail.present_modes.resize(present_mode_count);
+                vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &present_mode_count, detail.present_modes.data());
             }
 
-            return properties;
+            return detail;
         }
 
         bool UseDeviceIfSuitable(VkPhysicalDevice device, VkSurfaceKHR surface)
@@ -130,12 +132,13 @@ namespace vk
             if (!CheckExtensionSupport(device))
                 return false;
 
-            auto surface_properties = GetSurfaceProperties(device, surface);
-            if (!surface_properties.Valid())
+            auto swapchain_detail = GetSwapchainDetail(device, surface);
+            if (!swapchain_detail.Valid())
                 return false;
 
             physical_ = device;
             queue_family_indices_ = indices;
+            swapchain_detail_ = swapchain_detail;
             return true;
         }
 
@@ -215,6 +218,22 @@ namespace vk
 
             created_ = false;
             vkDestroyDevice(logical_, nullptr);
+        }
+
+        VkDevice Get()
+        {
+#ifdef _DEBUG
+            if (!created_) throw std::runtime_error("Tried to get device before creation.");
+#endif
+            return logical_;
+        }
+
+        SwapchainDetail GetSwapchainDetail()
+        {
+#ifdef _DEBUG
+            if (!created_) throw std::runtime_error("Tried to get swapchain before device creation.");
+#endif
+            return swapchain_detail_;
         }
     };
 }

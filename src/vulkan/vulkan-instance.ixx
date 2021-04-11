@@ -74,7 +74,7 @@ namespace vk
         }
 
     public:
-        void Create(const std::vector<const char*>& validation_layers)
+        void Create(const std::vector<const char*>& validation_layers = {})
         {
 #ifdef _DEBUG
             if (created_) throw std::runtime_error("Tried to create instance before destruction.");

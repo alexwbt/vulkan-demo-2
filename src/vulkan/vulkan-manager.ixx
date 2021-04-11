@@ -3,8 +3,9 @@ module;
 
 export module Vulkan:Manager;
 import :Instance;
-import :Swapchain;
+import :Surface;
 import :Device;
+import :Swapchain;
 
 namespace vk
 {
@@ -12,8 +13,9 @@ namespace vk
     {
     private:
         Instance instance_;
-        Swapchain swapchain_;
+        Surface surface_;
         Device device_;
+        Swapchain swapchain_;
 
     public:
         bool Init(GLFWwindow* window)
@@ -21,14 +23,13 @@ namespace vk
             try
             {
                 instance_.Create(
-                    {
 #ifdef _DEBUG
-                        "VK_LAYER_KHRONOS_validation"
+                    { "VK_LAYER_KHRONOS_validation" }
 #endif
-                    }
                 );
-                swapchain_.Create(instance_.Get(), window);
-                device_.Create(instance_.Get(), swapchain_.GetSurface());
+                surface_.Create(instance_.Get(), window);
+                device_.Create(instance_.Get(), surface_.Get());
+                swapchain_.Create(device_.GetSwapchainDetail());
             }
             catch (const std::runtime_error& error)
             {
@@ -40,8 +41,9 @@ namespace vk
 
         void Clean()
         {
+            swapchain_.Destroy();
             device_.Destroy();
-            swapchain_.Destroy(instance_.Get());
+            surface_.Destroy(instance_.Get());
             instance_.Destroy();
         }
     };
